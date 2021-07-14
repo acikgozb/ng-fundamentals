@@ -17,6 +17,7 @@ import { canDeactivateCreateEventGuard } from "./events/guards/can-deactivate-cr
 //resolver
 import {EventListResolver} from "./events/event-list.resolver";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { CreateSessionComponent } from './events/event-details/create-session/create-session.component';
 
 
 
@@ -29,6 +30,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     EventDetailsComponent,
     CreateEventComponent,
     NotFoundComponent,
+    CreateSessionComponent,
   ],
   imports: [
     BrowserModule,

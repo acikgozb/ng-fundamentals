@@ -6,6 +6,7 @@ import { EventsListComponent } from './events/events-list/events-list.component'
 import { EventDetailsComponent } from './events/event-details/event-details.component';
 import { CreateEventComponent } from './events/create-event/create-event.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
+import {CreateSessionComponent} from "./events/event-details/create-session/create-session.component";
 //guards
 import { EventActivatorGuard } from './events/guards/event-activator/event-activator.guard';
 //resolvers
@@ -21,6 +22,10 @@ const routes: Routes = [
     path: 'events',
     component: EventsListComponent,
     resolve: {events: EventListResolver}
+  },
+  {
+    path: 'events/session/new',
+    component: CreateSessionComponent
   },
   {
     path: 'events/:id',
