@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../auth.service";
 import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-profile',
@@ -13,8 +14,10 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private toastr: ToastrService
+  ) {
+  }
 
   ngOnInit(): void {
     this.profileForm = new FormGroup({
@@ -24,7 +27,7 @@ export class ProfileComponent implements OnInit {
           Validators.required,
           Validators.pattern("[a-zA-Z].*")
         ]
-        ),
+      ),
       lastName: new FormControl(
         this.authService.currentUser.lastName,
         [Validators.required]
@@ -42,10 +45,20 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(["events"]);
   }
 
+  logout() {
+    this.authService.logout()
+      .subscribe(() => {
+        this.router.navigate(["/user/login"])
+      })
+  }
+
   saveProfile(formValues: any) {
     if (this.profileForm.valid) {
-      this.authService.updateCurrentUser(formValues.firstName, formValues.lastName);
-      this.router.navigate(["events"]);
+      this.authService.updateCurrentUser(formValues.firstName, formValues.lastName)
+        .subscribe(() => {
+          this.toastr.success('Profile is saved!');
+          this.router.navigate(["events"]);
+        });
     }
   }
 }

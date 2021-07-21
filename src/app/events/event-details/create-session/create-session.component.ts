@@ -1,5 +1,5 @@
 //libraries
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 //services
 import {ValidatorService} from "../../../core/validator/validator.service";
@@ -9,16 +9,23 @@ import {ISession} from "../../shared/event.model";
 import {CreateSessionValidators} from "./create-session-validators/create-session-validators";
 
 @Component({
-  selector: 'app-create-session',
+  selector: 'create-session',
   templateUrl: './create-session.component.html',
   styleUrls: ['./create-session.component.css']
 })
 export class CreateSessionComponent implements OnInit {
+  @Output()
+  saveNewSession: EventEmitter<any> = new EventEmitter<ISession>();
+
+  @Output()
+  cancel: EventEmitter<any> = new EventEmitter<void>();
+
   newSessionForm!: FormGroup;
 
   constructor(
     private validatorService: ValidatorService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.newSessionForm = new FormGroup({
@@ -50,13 +57,19 @@ export class CreateSessionComponent implements OnInit {
     //to make it more type safe, create an object with type
     const newSession: ISession = {
       id: 0,
+      eventId: 0,
       name: formValues.name,
       presenter: formValues.presenter,
       duration: formValues.duration,
       level: formValues.level,
       abstract: formValues.abstract,
       voters: []
-    }
-    console.log(newSession);
+    };
+
+    this.saveNewSession.emit(newSession);
+  }
+
+  cancelCreateSession() {
+    this.cancel.emit();
   }
 }

@@ -1,16 +1,15 @@
 //libraries
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 //components
-import { EventsListComponent } from './events/events-list/events-list.component';
-import { EventDetailsComponent } from './events/event-details/event-details.component';
-import { CreateEventComponent } from './events/create-event/create-event.component';
-import { NotFoundComponent } from './errors/not-found/not-found.component';
+import {EventsListComponent} from './events/events-list/events-list.component';
+import {EventDetailsComponent} from './events/event-details/event-details.component';
+import {CreateEventComponent} from './events/create-event/create-event.component';
+import {NotFoundComponent} from './errors/not-found/not-found.component';
 import {CreateSessionComponent} from "./events/event-details/create-session/create-session.component";
-//guards
-import { EventActivatorGuard } from './events/guards/event-activator/event-activator.guard';
 //resolvers
-import {EventListResolver} from "./events/event-list.resolver";
+import {EventListResolver} from "./events/resolvers/event-list/event-list.resolver";
+import {EventResolver} from "./events/resolvers/event/event.resolver";
 
 const routes: Routes = [
   {
@@ -30,7 +29,7 @@ const routes: Routes = [
   {
     path: 'events/:id',
     component: EventDetailsComponent,
-    canActivate: [EventActivatorGuard]
+    resolve: {event: EventResolver}
   },
   {
     path: "404",
@@ -51,4 +50,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

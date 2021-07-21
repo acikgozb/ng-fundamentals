@@ -1,5 +1,5 @@
 export interface IEvent {
-  id: number
+  id: number,
   name: string,
   date: Date,
   time: string,
@@ -15,11 +15,12 @@ export interface IEvent {
 }
 
 export interface ISession {
-  id: number
-  name: string
-  presenter: string
-  duration: number
-  level: string
+  id: number,
+  eventId: number,
+  name: string,
+  presenter: string,
+  duration: number,
+  level: string,
   abstract: string,
   voters: string[]
 }
